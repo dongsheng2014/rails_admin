@@ -51,7 +51,7 @@ describe RailsAdmin::Config::Fields::Association do
     end
   end
 
-  describe 'ref_ids_method', active_record: true do
+  describe 'method_name', active_record: true do
     context 'with has_and_belongs_to_many' do
       before do
         class Author
@@ -62,13 +62,13 @@ describe RailsAdmin::Config::Fields::Association do
         end
       end
       let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
-      it 'has correct ref_ids_method' do
-        expect(field.ref_ids_method?).to eq :author_ids
+      it 'has correct method_name' do
+        expect(field.method_name?).to eq :author_ids
       end
     end
   end
 
-  describe 'ref_ids_method', mongoid: true do
+  describe 'method_name', mongoid: true do
     context 'with has_and_belongs_to_many' do
       before do
         class Author
@@ -86,8 +86,8 @@ describe RailsAdmin::Config::Fields::Association do
         end
       end
       let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
-      it 'has correct ref_ids_method' do
-        expect(field.ref_ids_method?).to eq :author_ids
+      it 'has correct method_name' do
+        expect(field.method_name?).to eq :author_ids
       end
     end
 
@@ -108,8 +108,8 @@ describe RailsAdmin::Config::Fields::Association do
         end
       end
       let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :_authors } }
-      it 'has correct ref_ids_method' do
-        expect(field.ref_ids_method?).to eq :authors
+      it 'has correct method_name' do
+        expect(field.method_name?).to eq :authors
       end
     end
   end
