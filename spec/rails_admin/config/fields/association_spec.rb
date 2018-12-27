@@ -51,7 +51,7 @@ describe RailsAdmin::Config::Fields::Association do
     end
   end
 
-  describe 'method_name', active_record: true do
+  describe 'method_name' do
     context 'with has_and_belongs_to_many - active record' do
       before do
         class Author < ActiveRecord::Base
