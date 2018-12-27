@@ -63,7 +63,7 @@ describe RailsAdmin::Config::Fields::Association do
       end
       let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
       it 'has correct method_name' do
-        expect(field.method_name?).to eq :author_ids
+        expect(field.allowed_methods?).to eq [:author_ids]
       end
     end
   end
@@ -87,7 +87,7 @@ describe RailsAdmin::Config::Fields::Association do
       end
       let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
       it 'has correct method_name' do
-        expect(field.method_name?).to eq :author_ids
+        expect(field.allowed_methods?).to eq [:author_ids]
       end
     end
 
@@ -109,7 +109,7 @@ describe RailsAdmin::Config::Fields::Association do
       end
       let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :_authors } }
       it 'has correct method_name' do
-        expect(field.method_name?).to eq :authors
+        expect(field.allowed_methods?).to eq [:authors]
       end
     end
   end
