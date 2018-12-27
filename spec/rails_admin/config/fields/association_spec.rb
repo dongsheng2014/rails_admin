@@ -51,7 +51,7 @@ describe RailsAdmin::Config::Fields::Association do
     end
   end
 
-  describe 'method_name' do
+  describe 'method_name', active_record: true do
     context 'with has_and_belongs_to_many - active record' do
       before do
         class Author < ActiveRecord::Base
@@ -85,7 +85,7 @@ describe RailsAdmin::Config::Fields::Association do
       end
       let(:field) { RailsAdmin.config('Article1').fields.detect { |f| f.name == :author1s } }
       it 'has correct method_name' do
-        expect(field.method_name?).to eq :author1_ids
+        expect(field.method_name).to eq :author1_ids
       end
     end
 
@@ -107,7 +107,7 @@ describe RailsAdmin::Config::Fields::Association do
       end
       let(:field) { RailsAdmin.config('Article2').fields.detect { |f| f.name == :_author2s } }
       it 'has correct method_name' do
-        expect(field.method_name?).to eq :author2s
+        expect(field.method_name).to eq :author2s
       end
     end
   end
