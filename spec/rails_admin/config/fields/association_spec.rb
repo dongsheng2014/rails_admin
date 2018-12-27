@@ -52,20 +52,20 @@ describe RailsAdmin::Config::Fields::Association do
   end
 
   describe 'method_name' do
-    # context 'with has_and_belongs_to_many - active record' do
-    #   before do
-    #     class Author < ActiveRecord::Base
-    #       has_and_belongs_to_many :articles
-    #     end
-    #     class Article < ActiveRecord::Base
-    #       has_and_belongs_to_many :authors
-    #     end
-    #   end
-    #   let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
-    #   it 'has correct method_name' do
-    #     expect(field.allowed_methods?).to eq [:author_ids]
-    #   end
-    # end
+    context 'with has_and_belongs_to_many - active record' do
+      before do
+        class Author < Tableless
+          has_and_belongs_to_many :articles
+        end
+        class Article < Tableless
+          has_and_belongs_to_many :authors
+        end
+      end
+      let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
+      it 'has correct method_name' do
+        expect(field.allowed_methods).to eq [:author_ids]
+      end
+    end
 
     context 'with has_and_belongs_to_many - mongoid' do
       before do
