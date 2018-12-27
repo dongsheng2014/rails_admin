@@ -146,7 +146,7 @@ describe 'RailsAdmin::Adapters::Mongoid::Association', mongoid: true do
       expect(subject.inverse_of).to be_nil
       expect(subject.read_only?).to be_falsey
       expect(subject.nested_options).to be_nil
-      expect(subject.ref_ids_method).to :mongo_category_ids
+      expect(subject.ref_ids_method).to eq :mongo_category_ids
     end
   end
 
@@ -156,7 +156,7 @@ describe 'RailsAdmin::Adapters::Mongoid::Association', mongoid: true do
     it 'returns correct values' do
       expect(subject.pretty_name).to eq 'Mongo users'
       expect(subject.type).to eq :has_and_belongs_to_many
-      expect(subject.klass).to eq MongoCategory
+      expect(subject.klass).to eq MongoUser
       expect(subject.primary_key).to eq :name
       expect(subject.foreign_key).to eq :users
       expect(subject.foreign_key_nullable?).to be_truthy
@@ -167,7 +167,7 @@ describe 'RailsAdmin::Adapters::Mongoid::Association', mongoid: true do
       expect(subject.inverse_of).to be_nil
       expect(subject.read_only?).to be_falsey
       expect(subject.nested_options).to be_nil
-      expect(subject.ref_ids_method).to :users
+      expect(subject.ref_ids_method).to eq :users
     end
   end
 
