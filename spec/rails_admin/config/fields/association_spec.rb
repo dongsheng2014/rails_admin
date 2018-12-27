@@ -50,4 +50,67 @@ describe RailsAdmin::Config::Fields::Association do
       end
     end
   end
+
+  describe 'ref_ids_method', active_record: true do
+    context 'with has_and_belongs_to_many' do
+      before do
+        class Author
+          has_and_belongs_to_many :articles
+        end
+        class Article
+          has_and_belongs_to_many :authors
+        end
+      end
+      let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
+      it 'has correct ref_ids_method' do
+        expect(field.ref_ids_method?).to eq :author_ids
+      end
+    end
+  end
+
+  describe 'ref_ids_method', mongoid: true do
+    context 'with has_and_belongs_to_many' do
+      before do
+        class Author
+          include Mongoid::Document
+          field :name, type: String
+          field :fullname, type: String
+        end
+        class Article
+          include Mongoid::Document
+
+          field :title, type: String
+          field :content, type: String
+
+          has_and_belongs_to_many :authors, inverse_of: nil
+        end
+      end
+      let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
+      it 'has correct ref_ids_method' do
+        expect(field.ref_ids_method?).to eq :author_ids
+      end
+    end
+
+    context 'with has_and_belongs_to_many and customized foreign_key' do
+      before do
+        class Author
+          include Mongoid::Document
+          field :name, type: String
+          field :fullname, type: String
+        end
+        class Article
+          include Mongoid::Document
+
+          field :title, type: String
+          field :content, type: String
+
+          has_and_belongs_to_many :_authors, class_name: "Author", inverse_of: nil, primary_key: 'name', foreign_key: "authors"
+        end
+      end
+      let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :_authors } }
+      it 'has correct ref_ids_method' do
+        expect(field.ref_ids_method?).to eq :authors
+      end
+    end
+  end
 end
