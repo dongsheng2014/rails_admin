@@ -82,11 +82,6 @@ describe RailsAdmin::Config::Fields::Association do
 
           has_and_belongs_to_many :authors, inverse_of: nil
         end
-        RailsAdmin.config do |config|
-          config.model Article do
-            field :author1s
-          end
-        end
       end
       let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
       it 'has correct allowed_methods' do
@@ -107,12 +102,12 @@ describe RailsAdmin::Config::Fields::Association do
           field :title, type: String
           field :content, type: String
 
-          has_and_belongs_to_many :_authors, class_name: "Author2", inverse_of: nil, primary_key: 'name', foreign_key: "authors"
+          has_and_belongs_to_many :_authors, class_name: "Author", inverse_of: nil, primary_key: 'name', foreign_key: "f_authors"
         end
       end
       let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :_authors } }
       it 'has correct allowed_methods' do
-        expect(field.allowed_methods).to eq [:authors]
+        expect(field.allowed_methods).to eq [:f_authors]
       end
     end
   end
