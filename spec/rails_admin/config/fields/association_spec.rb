@@ -51,8 +51,8 @@ describe RailsAdmin::Config::Fields::Association do
     end
   end
 
-  describe 'method_name', active_record: true do
-    context 'with has_and_belongs_to_many' do
+  describe 'method_name' do
+    context 'with has_and_belongs_to_many - active record' do
       before do
         class Author
           has_and_belongs_to_many :articles
@@ -66,28 +66,26 @@ describe RailsAdmin::Config::Fields::Association do
         expect(field.allowed_methods?).to eq [:author_ids]
       end
     end
-  end
 
-  describe 'method_name', mongoid: true do
-    context 'with has_and_belongs_to_many' do
+    context 'with has_and_belongs_to_many - mongoid' do
       before do
-        class Author
+        class Author1
           include Mongoid::Document
           field :name, type: String
           field :fullname, type: String
         end
-        class Article
+        class Article1
           include Mongoid::Document
 
           field :title, type: String
           field :content, type: String
 
-          has_and_belongs_to_many :authors, inverse_of: nil
+          has_and_belongs_to_many :author1s, inverse_of: nil
         end
       end
-      let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
+      let(:field) { RailsAdmin.config('Article1').fields.detect { |f| f.name == :author1s } }
       it 'has correct method_name' do
-        expect(field.allowed_methods?).to eq [:author_ids]
+        expect(field.allowed_methods?).to eq [:author1_ids]
       end
     end
 
