@@ -1,4 +1,4 @@
-class CreateJoinTableBookAuthor < ActiveRecord::Migration
+class CreateJoinTableBookAuthor < MigrationBase
   def change
     create_join_table :books, :authors do |t|
       # t.index [:book_id, :author_id]

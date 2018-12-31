@@ -1,4 +1,4 @@
-class CreateAuthors < ActiveRecord::Migration
+class CreateAuthors < MigrationBase
   def change
     create_table :authors do |t|
       t.string :name
