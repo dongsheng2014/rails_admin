@@ -171,7 +171,6 @@ describe 'RailsAdmin::Adapters::Mongoid::Association', mongoid: true do
     end
   end
 
-
   describe 'polymorphic belongs_to association' do
     before { allow(RailsAdmin::Config).to receive(:models_pool).and_return(%w(MongoBlog MongoPost MongoCategory MongoUser MongoProfile MongoComment)) }
     subject { @comment.associations.detect { |a| a.name == :commentable } }

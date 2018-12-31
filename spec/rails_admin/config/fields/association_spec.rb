@@ -51,63 +51,11 @@ describe RailsAdmin::Config::Fields::Association do
     end
   end
 
-  describe 'method_name' do
-    # context 'with has_and_belongs_to_many - active record' do
-    #   before do
-    #     class Author < Tableless
-    #       has_and_belongs_to_many :articles
-    #     end
-    #     class Article < Tableless
-    #       has_and_belongs_to_many :authors
-    #     end
-    #   end
-    #   let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
-    #   it 'has correct method_name' do
-    #     expect(field.allowed_methods).to eq [:author_ids]
-    #   end
-    # end
-
-    context 'with has_and_belongs_to_many - mongoid' do
-      before do
-        class Author
-          include Mongoid::Document
-          field :name, type: String
-          field :fullname, type: String
-        end
-        class Article
-          include Mongoid::Document
-
-          field :title, type: String
-          field :content, type: String
-
-          has_and_belongs_to_many :authors, inverse_of: nil
-        end
-      end
-      let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :authors } }
-      it 'has correct allowed_methods' do
-        expect(field.allowed_methods).to eq [:author_ids]
-      end
-    end
-
+  describe 'method_name', mongoid: true do
     context 'with has_and_belongs_to_many and customized foreign_key' do
-      before do
-        class Author
-          include Mongoid::Document
-          field :name, type: String
-          field :fullname, type: String
-        end
-        class Article
-          include Mongoid::Document
-
-          field :title, type: String
-          field :content, type: String
-
-          has_and_belongs_to_many :_authors, class_name: "Author", inverse_of: nil, primary_key: 'name', foreign_key: "f_authors"
-        end
-      end
-      let(:field) { RailsAdmin.config('Article').fields.detect { |f| f.name == :_authors } }
-      it 'has correct allowed_methods' do
-        expect(field.allowed_methods).to eq [:f_authors]
+      let(:field) { RailsAdmin.config('Book').fields.detect { |f| f.name == :authors } }
+      it 'has correct method_name' do
+        expect(field.method_name).to eq :people
       end
     end
   end
